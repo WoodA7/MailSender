@@ -23,42 +23,39 @@ namespace MailSender
     /// </summary>
     public partial class NewMessage : Window
     {
-        public string Username { get; set; }
-        public SecureString Passwd { get; set; }
+        public User User { get; set; }
+        public SmtpClient SmtpClient { get; set; }
 
-        public NewMessage(string userName, SecureString passwd)
+        public NewMessage(User user, SmtpClient smtpClient)
         {
-            this.Username = userName;
-            this.Passwd = passwd;
             InitializeComponent();
-            tbFrom.Text = userName;
+            User = user;
+            SmtpClient = smtpClient;
         }
 
         private void btnSend_Click(object sender, RoutedEventArgs e)
         {
-            var from = new MailAddress(tbFrom.Text);
+            var from = new MailAddress(User.Name);
             var to = new MailAddress(tbTo.Text);
-            var mail = new MailMessage(from, to);
-
-            mail.Subject = tbSubject.Text;
-            mail.Body = new TextRange(rtbBody.Document.ContentStart, rtbBody.Document.ContentEnd).Text;
-
-            var smtp = new SmtpClient
+            var mail = new MailMessage(from, to)
             {
-                Host = "smtp.gmail.com",
-                Port = 587
+                Subject = tbSubject.Text,
+                Body = new TextRange(rtbBody.Document.ContentStart, rtbBody.Document.ContentEnd).Text
             };
 
-            smtp.Credentials = new NetworkCredential(Username, Passwd);
-            smtp.EnableSsl = true;
-            smtp.Send(mail);
+            try
+            {
+                SmtpClient.Credentials = new NetworkCredential(User.Name, User.Password);
+                SmtpClient.EnableSsl = true;
+                SmtpClient.Send(mail);
+                MessageBox.Show(@"Your message was sent!");
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
 
-        }
-
-        private void btnRead_Click(object sender, RoutedEventArgs e)
-        {
-            var msgsWind = new MainWindow(Username, Passwd);
-            msgsWind.Show();
-        }
+            }
+         }
     }
 }

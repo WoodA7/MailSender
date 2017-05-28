@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,29 +22,34 @@ namespace MailSender
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow(string userName, SecureString passwd)
+        public ImapClient ImapClient { get; set; }
+        public User User { get; set; }
+        public SmtpClient SmtpClient { get; set; }
+        public MainWindow(ImapClient imapClient, SmtpClient smtpClient, User user)
         {
             InitializeComponent();
 
-            using (var imapClient = new ImapClient(@"imap.gmail.com", 993, true))
-            {
-                imapClient.Login(userName, passwd.ToString(), AuthMethod.Auto);
-                var uids = imapClient.Search(SearchCondition.All());
-                var messages = imapClient.GetMessages(uids);
-                dgMessages.ItemsSource = (from m in messages select new { m.From, m.Subject, m.Body }).ToList();
-            }
-        }
+            ImapClient = imapClient;
+            User = user;
+            SmtpClient = smtpClient;
 
+            var uids = ImapClient.Search(SearchCondition.SentSince(DateTime.Today.AddDays(-10)));
+            var messages = ImapClient.GetMessages(uids);
+            dgMessages.ItemsSource = (from m in messages select new { m.From, m.Subject, m.Body }).ToList();
+        }
         private void btnNewMessage_Click(object sender, RoutedEventArgs e)
         {
-
+            var newMsgWindow = new NewMessage(User, SmtpClient);
+            newMsgWindow.Show();
         }
-
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (MessageBox.Show(@"Exit application?", "", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                e.Cancel = true;
+        }
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            var result = MessageBox.Show(@"Exit application?", "", MessageBoxButton.YesNo);
-            if (result == MessageBoxResult.Yes)
-                Close();
+            Close();
         }
     }
 }

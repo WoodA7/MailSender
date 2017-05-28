@@ -7,22 +7,19 @@
         mc:Ignorable="d"
         Title="New message" Height="387.819" Width="525">
     <Grid>
-        <Label x:Name="label" Content="Mail from:" Padding="2,0,0,0" HorizontalAlignment="Left" Margin="11,10,0,0" VerticalAlignment="Top" Height="23" Width="67"/>
-        <TextBox x:Name="tbFrom" HorizontalAlignment="Left" Height="23" Margin="83,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="359"/>
-        <Label x:Name="label_Copy" Content="Mail to:" Padding="2,0,0,0" HorizontalAlignment="Left" Margin="11,38,0,0" VerticalAlignment="Top" Height="23" Width="67"/>
-        <TextBox x:Name="tbTo" HorizontalAlignment="Left" Height="23" Margin="83,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="359"/>
-        <Label x:Name="label_Copy1" Content="Subject:" Padding="2,0,0,0" HorizontalAlignment="Left" Margin="11,66,0,0" VerticalAlignment="Top" Height="23" Width="67"/>
-        <TextBox x:Name="tbSubject" HorizontalAlignment="Left" Height="23" Margin="83,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="424"/>
-        <Label x:Name="label1" Content="Message:" HorizontalAlignment="Left" Margin="11,98,0,0" VerticalAlignment="Top" Padding="2,0,0,0" Height="22" Width="67"/>
-        <RichTextBox x:Name="rtbBody" HorizontalAlignment="Left" Height="225" Margin="83,98,0,0" VerticalAlignment="Top" Width="424">
+        <Label x:Name="label_Copy" Content="Mail to:" VerticalContentAlignment="Center" Padding="2,0,0,0" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top" Height="23" Width="57"/>
+        <TextBox x:Name="tbTo" HorizontalAlignment="Left" Height="23" Margin="72,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="369"/>
+        <Label x:Name="label_Copy1" Content="Subject:" VerticalContentAlignment="Center" Padding="2,0,0,0" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top" Height="23" Width="57"/>
+        <TextBox x:Name="tbSubject" HorizontalAlignment="Left" Height="23" Margin="72,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="434"/>
+        <Label x:Name="label1" Content="Message:" HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top" Padding="2,0,0,0" Height="22" Width="57"/>
+        <RichTextBox x:Name="rtbBody" HorizontalAlignment="Left" Height="251" Margin="72,71,0,0" VerticalAlignment="Top" Width="434">
             <FlowDocument>
                 <Paragraph>
                     <Run Text=""/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <Button x:Name="btnSend" Content="Send" HorizontalAlignment="Left" Margin="432,328,0,0" VerticalAlignment="Top" Width="75" Click="btnSend_Click"/>
-        <Button x:Name="btnRead" Content="Read" HorizontalAlignment="Left" Margin="83,328,0,0" VerticalAlignment="Top" Width="75" Click="btnRead_Click"/>
+        <Button x:Name="btnSend" Content="Send" HorizontalAlignment="Left" Margin="431,327,0,0" VerticalAlignment="Top" Width="75" Click="btnSend_Click"/>
 
     </Grid>
 </Window>
